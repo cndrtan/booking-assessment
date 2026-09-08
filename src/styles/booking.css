@@ -1,0 +1,605 @@
+/* ==================================================================
+   Booking flow styles
+   Tokens live on .hb-root so the whole flow can be themed in one place.
+   ================================================================== */
+
+.hb-root {
+  --ink: #16233a;
+  --ink2: #5d6a80;
+  --paper: #e7ebf1;
+  --card: #ffffff;
+  --line: #cfd7e3;
+  --accent: #1f5f5b;
+  --accent-strong: #184c49;
+  --accent-soft: #e4eeec;
+  --err: #a0342a;
+  --err-soft: #fbf1ef;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  min-height: 100%;
+  padding: 32px 20px 96px;
+  box-sizing: border-box;
+}
+
+.hb-root * {
+  box-sizing: border-box;
+}
+
+.hb-shell {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---------- header + live trip ribbon ---------- */
+
+.hb-head {
+  margin-bottom: 28px;
+}
+
+.hb-brand {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink2);
+  margin: 0 0 6px;
+}
+
+.hb-title {
+  font-family: var(--serif);
+  font-size: 38px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 14px;
+}
+
+.hb-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 9px 0;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-ribbon-item + .hb-ribbon-item::before {
+  content: "·";
+  margin-right: 18px;
+  color: var(--line);
+}
+
+.hb-ribbon-empty {
+  color: var(--ink2);
+  font-size: 13px;
+}
+
+/* ---------- stepper ---------- */
+
+.hb-steps {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.hb-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.hb-step:last-child {
+  flex: 0 0 auto;
+}
+
+.hb-step + .hb-step::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  margin: 0 10px;
+}
+
+.hb-step--done + .hb-step::before,
+.hb-step--seen + .hb-step::before {
+  background: var(--accent);
+}
+
+.hb-step-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: 0;
+  padding: 4px 2px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--ink2);
+  font: inherit;
+  font-size: 13px;
+}
+
+.hb-step-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hb-dot {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-step--current .hb-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.hb-step--current .hb-step-btn {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.hb-step--done .hb-dot,
+.hb-step--seen .hb-dot {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hb-step-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- card + sections ---------- */
+
+.hb-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 26px;
+}
+
+.hb-h2 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 16px;
+}
+
+.hb-rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 26px 0;
+}
+
+/* ---------- fields ---------- */
+
+.hb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hb-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hb-field--wide {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+}
+
+.hb-label {
+  display: block;
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 5px;
+}
+
+.hb-input {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 9px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: var(--accent);
+}
+
+.hb-input:disabled,
+.hb-input--locked {
+  background: #f4f6f9;
+  color: var(--ink2);
+}
+
+.hb-select {
+  appearance: none;
+  padding-right: 34px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink2) 50%),
+    linear-gradient(135deg, var(--ink2) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 55%, calc(100% - 11px) 55%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.hb-field--bad .hb-input {
+  border-color: var(--err);
+}
+
+.hb-hint {
+  font-size: 12px;
+  color: var(--ink2);
+  margin: 5px 0 0;
+}
+
+.hb-error {
+  font-size: 12px;
+  color: var(--err);
+  margin: 5px 0 0;
+}
+
+/* ---------- checkboxes, mode cards, chips ---------- */
+
+.hb-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.hb-check--lead {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 13px;
+  margin-bottom: 0;
+}
+
+.hb-check input {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.hb-check strong {
+  display: block;
+  font-weight: 600;
+}
+
+.hb-check em {
+  display: block;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--ink2);
+  margin-top: 2px;
+}
+
+.hb-modes {
+  border: 0;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.hb-mode-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.hb-mode {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.hb-mode.is-on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.hb-mode input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hb-mode:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hb-mode-name {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.hb-mode-note {
+  display: block;
+  font-size: 12px;
+  color: var(--ink2);
+  margin-top: 2px;
+}
+
+.hb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 13px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.hb-chip.is-on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.hb-chip input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.hb-chip:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- messages ---------- */
+
+.hb-alert {
+  border-left: 3px solid var(--err);
+  background: var(--err-soft);
+  color: var(--err);
+  padding: 10px 12px;
+  font-size: 13px;
+  border-radius: 0 3px 3px 0;
+  margin-bottom: 20px;
+}
+
+.hb-note {
+  font-size: 14px;
+  color: var(--ink2);
+  background: #f4f6f9;
+  padding: 12px;
+  border-radius: 3px;
+  margin: 22px 0 0;
+}
+
+.hb-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+/* ---------- review ---------- */
+
+.hb-sum {
+  border-top: 1px solid var(--line);
+  padding: 16px 0 4px;
+}
+
+.hb-sum:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.hb-sum-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.hb-sum-head h3 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.hb-rows {
+  margin: 0;
+}
+
+.hb-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.hb-row dt {
+  color: var(--ink2);
+}
+
+.hb-row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- footer buttons ---------- */
+
+.hb-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  margin-top: 26px;
+  padding-top: 20px;
+}
+
+.hb-btn {
+  font: inherit;
+  font-size: 15px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.hb-btn--go {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.hb-btn--go:hover {
+  background: var(--accent-strong);
+}
+
+.hb-btn--quiet {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.hb-btn--quiet:hover {
+  border-color: var(--ink2);
+}
+
+.hb-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- submit notification ---------- */
+
+.hb-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 32px));
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--ink);
+  color: #f2f5f8;
+  border-radius: 4px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(22, 35, 58, 0.28);
+}
+
+.hb-toast strong {
+  font-size: 15px;
+}
+
+.hb-toast p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: #b9c3d2;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-toast-acts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.hb-toast .hb-link {
+  color: #8fd0c8;
+}
+
+.hb-x {
+  background: none;
+  border: 0;
+  color: #b9c3d2;
+  font-size: 14px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .hb-title {
+    font-size: 30px;
+  }
+
+  .hb-grid,
+  .hb-mode-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hb-step-label {
+    display: none;
+  }
+
+  .hb-step {
+    flex: 0 0 auto;
+  }
+
+  .hb-step + .hb-step::before {
+    flex: 0 0 28px;
+  }
+
+  .hb-row {
+    grid-template-columns: 110px 1fr;
+  }
+
+  .hb-card {
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hb-root * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
