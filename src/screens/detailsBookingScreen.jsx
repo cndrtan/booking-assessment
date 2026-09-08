@@ -1,6 +1,7 @@
 import {
   Field,
   TextInput,
+  DateInput,
   SelectInput,
   ReadOnlyInput,
   LinkButton,
@@ -8,10 +9,6 @@ import {
 import { ROOM_TYPES, PREFERENCES, AIRLINES } from "../config/bookingConfig";
 import { fmtDate, isTransportOutsideStay } from "../helpers/bookingHelpers";
 
-/**
- * Screen 2 — room details always, journey details only when screen 1
- * ticked the transportation box. The chosen mode picks the field set.
- */
 export default function DetailsBookingScreen({ data, errors, set, goTo }) {
   const outsideStay = isTransportOutsideStay(data);
 
@@ -71,7 +68,7 @@ export default function DetailsBookingScreen({ data, errors, set, goTo }) {
             id="stayEcho"
             value={
               data.checkIn && data.checkOut
-                ? `${fmtDate(data.checkIn)} → ${fmtDate(data.checkOut)}`
+                ? `${fmtDate(data.checkIn)} -> ${fmtDate(data.checkOut)}`
                 : ""
             }
           />
@@ -186,9 +183,8 @@ function TrainFields({ data, errors, set, outsideStay }) {
         error={errors.trainDate}
         hint={outsideStay ? "This date falls outside your stay." : undefined}
       >
-        <TextInput
+        <DateInput
           id="trainDate"
-          type="date"
           value={data.trainDate}
           error={errors.trainDate}
           onChange={(v) => set({ trainDate: v })}
@@ -238,9 +234,8 @@ function FlightFields({ data, errors, set, outsideStay }) {
         error={errors.flightDate}
         hint={outsideStay ? "This date falls outside your stay." : undefined}
       >
-        <TextInput
+        <DateInput
           id="flightDate"
-          type="date"
           value={data.flightDate}
           error={errors.flightDate}
           onChange={(v) => set({ flightDate: v })}

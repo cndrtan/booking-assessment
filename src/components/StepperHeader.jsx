@@ -1,9 +1,5 @@
 import { STEPS } from "../config/bookingConfig";
 
-/**
- * Clickable step header. `completed` is an array of booleans, one per step.
- * Navigation rules live in the parent (BookingWizard.goTo).
- */
 export default function StepperHeader({ step, completed, onNavigate }) {
   return (
     <nav aria-label="Booking steps">
@@ -19,9 +15,13 @@ export default function StepperHeader({ step, completed, onNavigate }) {
                 className="hb-step-btn"
                 onClick={() => onNavigate(i)}
                 aria-current={i === step ? "step" : undefined}
+                aria-label={`Step ${i + 1} of ${STEPS.length}: ${s.title}`}
               >
                 <span className="hb-dot">{state === "done" ? "✓" : i + 1}</span>
-                <span className="hb-step-label">{s.title}</span>
+                <span className="hb-step-label">
+                  <span className="hb-step-long">{s.title}</span>
+                  <span className="hb-step-short">{s.short ?? s.title}</span>
+                </span>
               </button>
             </li>
           );

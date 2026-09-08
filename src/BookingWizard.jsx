@@ -10,10 +10,6 @@ import { validateStep, nightsBetween, fmtDate } from "./helpers/bookingHelpers";
 
 import "./styles/booking.css";
 
-/**
- * The only stateful component in the flow. Screens stay presentational:
- * they receive `data`, `errors`, `set` and `goTo` and nothing else.
- */
 export default function BookingWizard() {
   const [step, setStep] = useState(0);
   const [data, setData] = useState(EMPTY);
@@ -110,7 +106,7 @@ export default function BookingWizard() {
 
   const ribbon = [
     data.checkIn && data.checkOut
-      ? `${fmtDate(data.checkIn)} → ${fmtDate(data.checkOut)}`
+      ? `${fmtDate(data.checkIn)} -> ${fmtDate(data.checkOut)}`
       : null,
     nights ? `${nights} night${nights === 1 ? "" : "s"}` : null,
     data.includeTransport
@@ -129,7 +125,7 @@ export default function BookingWizard() {
     <div className="hb-root">
       <div className="hb-shell" ref={topRef}>
         <header className="hb-head">
-          <p className="hb-brand">Marisol Bay Hotel</p>
+          <p className="hb-brand">Candra Hotel</p>
           <h1 className="hb-title">Plan your stay</h1>
 
           <div className="hb-ribbon" aria-live="polite">
