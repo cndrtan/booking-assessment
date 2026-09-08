@@ -1,11 +1,7 @@
-import { Field, TextInput } from "../components/FormFields";
+import { Field, DateInput } from "../components/FormFields";
 import { TRANSPORT_MODES } from "../config/bookingConfig";
 import { nightsBetween, todayISO } from "../helpers/bookingHelpers";
 
-/**
- * Screen 1 — check-in / check-out dates, plus the transportation checkbox
- * that decides what screen 2 will ask for.
- */
 export default function BookingScreen({ data, errors, set }) {
   const today = todayISO();
   const nights = nightsBetween(data.checkIn, data.checkOut);
@@ -13,7 +9,6 @@ export default function BookingScreen({ data, errors, set }) {
   const onCheckInChange = (v) =>
     set({
       checkIn: v,
-      // a check-out that is no longer valid gets cleared rather than left wrong
       checkOut: data.checkOut && data.checkOut <= v ? "" : data.checkOut,
     });
 
@@ -29,9 +24,8 @@ export default function BookingScreen({ data, errors, set }) {
 
       <div className="hb-grid">
         <Field label="Check-in" htmlFor="checkIn" error={errors.checkIn}>
-          <TextInput
+          <DateInput
             id="checkIn"
-            type="date"
             min={today}
             value={data.checkIn}
             error={errors.checkIn}
@@ -45,9 +39,8 @@ export default function BookingScreen({ data, errors, set }) {
           error={errors.checkOut}
           hint={nights ? `${nights} night${nights === 1 ? "" : "s"}` : undefined}
         >
-          <TextInput
+          <DateInput
             id="checkOut"
-            type="date"
             min={data.checkIn || today}
             value={data.checkOut}
             error={errors.checkOut}

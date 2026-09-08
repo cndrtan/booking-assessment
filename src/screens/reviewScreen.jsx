@@ -1,10 +1,6 @@
 import { LinkButton } from "../components/FormFields";
 import { fmtDate, nightsBetween } from "../helpers/bookingHelpers";
 
-/**
- * Screen 3 — read-only summary of everything collected, with per-section
- * Edit links that jump back to the screen that owns those fields.
- */
 export default function ReviewScreen({ data, goTo }) {
   const nights = nightsBetween(data.checkIn, data.checkOut);
 
@@ -56,10 +52,6 @@ export default function ReviewScreen({ data, goTo }) {
     </section>
   );
 }
-
-/* -------------------------------------------------------------- */
-/* review-only presentation pieces                                 */
-/* -------------------------------------------------------------- */
 
 function Summary({ title, onEdit, children }) {
   return (

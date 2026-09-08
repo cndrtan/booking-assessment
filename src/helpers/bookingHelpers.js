@@ -1,7 +1,3 @@
-/**
- * Pure helpers — no React, no side effects, easy to unit test.
- */
-
 export const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim());
 
 /** "2026-06-12" -> "Fri 12 Jun" */
@@ -24,6 +20,39 @@ export const nightsBetween = (a, b) => {
 /** Today as an ISO date, for `min` on the date inputs. */
 export const todayISO = () => new Date().toISOString().slice(0, 10);
 
+/** "2026-06-12" -> "12-06-2026" (what the person sees while typing) */
+export const isoToDisplay = (iso) => {
+  if (!iso || iso.length < 10) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}-${m}-${y}`;
+};
+
+/** Keeps typing in shape: digits only, dashes inserted, capped at 8 digits. */
+export const maskDate = (raw) => {
+  const n = String(raw).replace(/\D/g, "").slice(0, 8);
+  return [n.slice(0, 2), n.slice(2, 4), n.slice(4, 8)].filter(Boolean).join("-");
+};
+
+/**
+ * "12-06-2026" -> "2026-06-12", or "" when incomplete or not a real date
+ * (31-02 and friends are rejected by the round-trip check).
+ */
+export const displayToISO = (text) => {
+  const n = String(text).replace(/\D/g, "");
+  if (n.length !== 8) return "";
+
+  const d = n.slice(0, 2);
+  const m = n.slice(2, 4);
+  const y = n.slice(4, 8);
+  const iso = `${y}-${m}-${d}`;
+  const dt = new Date(iso + "T00:00:00");
+
+  if (Number.isNaN(dt.getTime())) return "";
+  if (dt.getFullYear() !== +y || dt.getMonth() + 1 !== +m || dt.getDate() !== +d) return "";
+
+  return iso;
+};
+
 /** Which date field the chosen transport mode uses. */
 export const transportDateOf = (d) =>
   d.transportMode === "train" ? d.trainDate : d.transportMode === "flight" ? d.flightDate : "";
@@ -35,10 +64,7 @@ export const isTransportOutsideStay = (d) => {
   return date < d.checkIn || date > d.checkOut;
 };
 
-/**
- * Validate one step of the flow.
- * @returns {Object} map of field name -> error message. Empty means valid.
- */
+
 export function validateStep(step, d) {
   const e = {};
 

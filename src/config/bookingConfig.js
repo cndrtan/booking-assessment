@@ -4,9 +4,10 @@
  */
 
 export const STEPS = [
-  { id: "stay", title: "Dates & travel" },
-  { id: "details", title: "Room & journey" },
-  { id: "review", title: "Review" },
+  // `short` is the label used on narrow screens
+  { id: "stay", title: "Dates & travel", short: "Dates" },
+  { id: "details", title: "Room & journey", short: "Details" },
+  { id: "review", title: "Review", short: "Review" },
 ];
 
 export const ROOM_TYPES = [

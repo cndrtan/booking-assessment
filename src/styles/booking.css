@@ -81,67 +81,74 @@
 
 /* ---------- stepper ---------- */
 
+/* Equal columns, so three steps or five steps both stay evenly spaced.
+   The rule above each step is the progress indicator. */
+
 .hb-steps {
   list-style: none;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 10px;
   margin: 0 0 18px;
   padding: 0;
 }
 
 .hb-step {
   display: flex;
-  align-items: center;
-  flex: 1;
   min-width: 0;
 }
 
-.hb-step:last-child {
-  flex: 0 0 auto;
-}
-
-.hb-step + .hb-step::before {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-  margin: 0 10px;
-}
-
-.hb-step--done + .hb-step::before,
-.hb-step--seen + .hb-step::before {
-  background: var(--accent);
-}
-
 .hb-step-btn {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 9px;
+  min-width: 0;
+  min-height: 44px; /* comfortable tap target */
+  text-align: left;
   background: none;
   border: 0;
-  padding: 4px 2px;
-  border-radius: 3px;
+  border-top: 2px solid var(--line);
+  padding: 11px 2px 0;
   cursor: pointer;
   color: var(--ink2);
   font: inherit;
   font-size: 13px;
 }
 
+.hb-step-btn:hover {
+  color: var(--ink);
+}
+
 .hb-step-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.hb-step--done .hb-step-btn,
+.hb-step--seen .hb-step-btn,
+.hb-step--current .hb-step-btn {
+  border-top-color: var(--accent);
+}
+
+.hb-step--current .hb-step-btn {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .hb-dot {
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   flex: 0 0 auto;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--card);
   font-size: 12px;
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
 }
 
@@ -151,11 +158,6 @@
   color: #fff;
 }
 
-.hb-step--current .hb-step-btn {
-  color: var(--ink);
-  font-weight: 600;
-}
-
 .hb-step--done .hb-dot,
 .hb-step--seen .hb-dot {
   border-color: var(--accent);
@@ -163,9 +165,14 @@
 }
 
 .hb-step-label {
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.hb-step-short {
+  display: none;
 }
 
 /* ---------- card + sections ---------- */
@@ -238,6 +245,60 @@
 .hb-input--locked {
   background: #f4f6f9;
   color: var(--ink2);
+}
+
+/* Date field: a text input with a real placeholder, plus a button that opens
+   the native calendar from an offscreen date input. */
+
+.hb-date {
+  position: relative;
+  display: block;
+}
+
+.hb-date .hb-input--date {
+  padding-right: 38px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hb-input::placeholder {
+  color: var(--ink2);
+  opacity: 1;
+}
+
+.hb-date-open {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 34px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  color: var(--ink2);
+  cursor: pointer;
+}
+
+.hb-date-open:hover {
+  color: var(--accent);
+}
+
+.hb-date-open:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.hb-date-native {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .hb-select {
@@ -576,16 +637,21 @@
     grid-template-columns: 1fr;
   }
 
-  .hb-step-label {
+  .hb-steps {
+    gap: 6px;
+  }
+
+  .hb-step-long {
     display: none;
   }
 
-  .hb-step {
-    flex: 0 0 auto;
+  .hb-step-short {
+    display: inline;
   }
 
-  .hb-step + .hb-step::before {
-    flex: 0 0 28px;
+  .hb-step-btn {
+    gap: 7px;
+    font-size: 12px;
   }
 
   .hb-row {
